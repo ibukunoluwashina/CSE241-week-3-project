@@ -95,10 +95,19 @@ const deleteTask = async (req, res) => {
   }
 };
 
+const isAuthenticated = (req, res, next) => {
+  if (req.session.user === undefined) {
+    return res.status(401).json('You donnot have access.');
+  }
+  // Call next to move on to the next middleware
+  next();
+}
+
 module.exports = {
   getAll,
   getSingle,
   creatTask,
   updateTask,
-  deleteTask
+  deleteTask,
+  isAuthenticated
 };
